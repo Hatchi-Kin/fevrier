@@ -61,7 +61,7 @@ def predict(credit: Credit):
             model = pickle.load(file)
     except FileNotFoundError:
         return {"error": "Model file not found"}
-
+# commentaire
     try:
         # No need to unpack 'credit' here
         data = pd.DataFrame([credit.model_dump()])
