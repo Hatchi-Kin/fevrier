@@ -34,7 +34,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USER }}
+        username: ec2-user
         key: ${{ secrets.DEPLOY_KEY }}
         script: |
           cd /home/ec2-user/fevrier 
