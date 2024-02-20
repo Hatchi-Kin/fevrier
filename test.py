@@ -5,6 +5,8 @@ from api import app
 import os
 import pickle
 
+# python -m unittest test.py
+
 # assertEqual(a, b) : Vérifie si a est égal à b.
 # assertNotEqual(a, b) : Vérifie si a est différent de b.
         

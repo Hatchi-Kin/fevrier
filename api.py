@@ -13,18 +13,9 @@ import boto3
 
 # Création des tags
 tags = [
-    {
-        "name": "Hello",
-        "description": "Greeting service",
-    },
-    {
-        "name": "Predict V1",
-        "description": "Prediction service for model  1",
-    },
-    {
-        "name": "Predict V2",
-        "description": "Prediction service for model  2",
-    }
+    {"name": "help", "description": "Greeting service"},
+    {"name": "Predict V1", "description": "Prediction service for model 1"},
+    {"name": "Predict V2", "description": "Prediction service for model 2"}
 ]
 
 # Création de l'application
@@ -35,10 +26,20 @@ app = FastAPI(
     openapi_tags=tags,
 )
 
+@app.get("/", tags=["help"])
+def get_help():
+    """
+    Endpoint returning a welcome message.
+    """
+    return {"message": "Welcome to the API"}
+
 
 # Point de terminaison avec paramètre
-@app.get("/hello", tags=["Hello name V1"])
+@app.get("/hello", tags=["help"])
 def hello(name: str = "World"):
+    """
+    Endpoint returning a greeting message.
+    """
     return {"message": f"Hello {name}"}
 
 
@@ -56,12 +57,15 @@ class Credit(BaseModel):
 # # Point de terminaison : Prédiction 1
 @app.post("/predict", tags=["Predict V1"])
 def predict(credit: Credit):
+    """
+    Endpoint for making predictions with the first model.
+    """
     try:
         with open("model_1.pkl", "rb") as file:
             model = pickle.load(file)
     except FileNotFoundError:
         return {"error": "Model file not found"}
-# commentaire
+
     try:
         # No need to unpack 'credit' here
         data = pd.DataFrame([credit.model_dump()])
@@ -92,6 +96,9 @@ class Credit2(BaseModel):
 # Point de terminaison : Prédiction 2
 @app.post("/predict2", tags=["Predict V2"])
 def predict_2(credit: Credit2):
+    """
+    Endpoint for making predictions with the second model.
+    """
     try:
         with open("model_2.pkl", "rb") as file:
             model = pickle.load(file)
