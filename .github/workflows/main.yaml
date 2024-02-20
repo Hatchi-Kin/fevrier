@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
-
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +30,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -37,6 +38,6 @@ jobs:
         username: admin
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /home/admin/fevrier 
+          cd /home/admin/api_cicd 
           git pull
           docker-compose restart
