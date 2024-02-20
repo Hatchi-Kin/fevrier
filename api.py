@@ -1,14 +1,14 @@
 # Import des librairies uvicorn, pickle, FastAPI, File, UploadFile, BaseModel
-from fastapi import FastAPI, File, UploadFile
-import uvicorn
-import numpy as np
-from pydantic import BaseModel
+import os
 import pickle
 import pandas as pd
+import numpy as np
+from fastapi import FastAPI, File, UploadFile
+import uvicorn
+from pydantic import BaseModel
 
-import mlflow
-import os
-import boto3
+# import mlflow
+# import boto3
 
 
 # Création des tags
