@@ -1,9 +1,9 @@
 version: '3.7'
 
 services:
-  web:
-    build: .
-    command: uvicorn app:app --host 0.0.0.0 --port 80
+  cicd:
+    build: 
+      context: .
     volumes:
       - .:/app
     ports:
