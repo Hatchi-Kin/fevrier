@@ -37,5 +37,6 @@ jobs:
         username: admin
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /home/ec2-user/fevrier 
+          cd /home/admin/fevrier 
           git pull
+          docker-compose restart
