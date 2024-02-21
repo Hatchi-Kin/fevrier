@@ -25,19 +25,16 @@ jobs:
       run: |
         python -m unittest discover 
 
-  deploy:
-    name: Deploy to EC2 on master branch push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the files
-        uses: actions/checkout@v3
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-        script: |
-          cd /home/admin/api_cicd 
-          git pull
-          docker-compose restart
+deploy:
+  name: Deploy to EC2 on master branch push
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout the files
+      uses: actions/checkout@v3
+    - name: Deploy to Server 1
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.HOST_DNS }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        ARGS: "cd /home/admin/fevrier && git pull && docker-compose restart"
