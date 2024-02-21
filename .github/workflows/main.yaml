@@ -25,18 +25,17 @@ jobs:
         python -m unittest discover 
 
   deploy:
-    needs: build
+    name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Deploy to server
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.VPS_HOST }}
-        username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Checkout the files
+        uses: actions/checkout@v3
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
         script: |
           cd /home/admin/api_cicd 
           git pull
