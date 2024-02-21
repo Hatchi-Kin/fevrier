@@ -12,7 +12,7 @@ from pydantic import BaseModel
 # 
 # Création des tags
 tags = [
-    {"name": "help", "description": "Greeting service"},
+    {"name": "help", "description": "Loupiotte Verte !"},
     {"name": "Predict V1", "description": "Prediction service for model 1"},
     {"name": "Predict V2", "description": "Prediction service for model 2"},
 ]
