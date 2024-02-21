@@ -1,4 +1,1 @@
-Oo
-Oo
-Oo
-Oo
+On test le CI/CD avec les github actions et un Ec2

@@ -9,13 +9,12 @@ from pydantic import BaseModel
 
 # import mlflow
 # import boto3
-
-
+# 
 # Création des tags
 tags = [
     {"name": "help", "description": "Greeting service"},
     {"name": "Predict V1", "description": "Prediction service for model 1"},
-    {"name": "Predict V2", "description": "Prediction service for model 2"}
+    {"name": "Predict V2", "description": "Prediction service for model 2"},
 ]
 
 # Création de l'application
@@ -25,6 +24,7 @@ app = FastAPI(
     version="1.0.0",
     openapi_tags=tags,
 )
+
 
 @app.get("/", tags=["help"])
 def get_help():
@@ -43,7 +43,9 @@ def hello(name: str = "World"):
     return {"message": f"Hello {name}"}
 
 
-# Création du modèle de données pour le modéle 1 ('Gender', 'Age', 'Physical Activity Level', 'Heart Rate', 'Daily Steps', 'BloodPressure_high', 'BloodPressure_low', 'Sleep Disorder'])
+# Création du modèle de données pour le modéle 1 
+# ('Gender', 'Age', 'Physical Activity Level', 'Heart Rate', 'Daily Steps', 
+# 'BloodPressure_high', 'BloodPressure_low', 'Sleep Disorder')
 class Credit(BaseModel):
     Gender: int
     Age: int
@@ -86,7 +88,8 @@ def predict(credit: Credit):
         return {"error": str(e)}
 
 
-# Création du modèle de données pour le modéle 2 ('Physical Activity Level', 'Heart Rate', 'Daily Steps', 'Sleep Disorder')
+# Création du modèle de données pour le modéle 2 
+# ('Physical Activity Level', 'Heart Rate', 'Daily Steps', 'Sleep Disorder')
 class Credit2(BaseModel):
     Physical_Activity_Level: int
     Heart_Rate: int
