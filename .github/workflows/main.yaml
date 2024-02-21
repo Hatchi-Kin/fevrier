@@ -40,7 +40,7 @@ jobs:
           script: |
             cd /home/admin/fevrier
             git pull
-            docker-compose restart
+            sudo docker-compose restart
 
 
 # loupiotte VERTE !
