@@ -32,12 +32,15 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v3
       - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          ARGS: "cd /home/admin/fevrier && git pull && docker-compose restart"
+          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          script: |
+            cd /home/admin/api_cicd
+            git pull
+            docker-compose restart
 
 
-# GOOOOOOOOOAAAAAL !
+# VERT !
