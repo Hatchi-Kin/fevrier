@@ -31,13 +31,14 @@ class TestAPI(TestCase):
     def test_predict(self):
         client = TestClient(app)
         payload = {
-            "Gender": 1,
-            "Age": 30,
-            "Physical_Activity_Level": 30,
-            "Heart_Rate": 70,
-            "Daily_Steps": 7000,
-            "BloodPressure_high": 110,
-            "BloodPressure_low": 75,
+            "PassengerId": 892,
+            "Pclass": 3,
+            "Sex": 1,
+            "Age": 34.5,
+            "SibSp": 0,
+            "Parch": 0,
+            "Fare": 7.8292,
+            "Embarked": 1,
         }
         response = client.post("/predict", json=payload)
         self.assertEqual(response.status_code, 200)
