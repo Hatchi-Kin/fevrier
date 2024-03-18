@@ -3,9 +3,10 @@ from fastapi.testclient import TestClient
 from api import app
 import os
 
+
 class TestDev(TestCase):
-# Vérifie que les fichiers sont présents
-    
+    # Vérifie que les fichiers sont présents
+
     def test_files(self):
         list_files = os.listdir()
         self.assertIn("api.py", list_files)
@@ -19,30 +20,32 @@ class TestDev(TestCase):
         self.assertIn(".gitignore", list_files)
 
 
-# class TestAPI(TestCase):
+class TestAPI(TestCase):
 
-#     # Vérifie que l'API est bien lancée
-#     def test_api(self):
-#         client = TestClient(app)
-#         response = client.get("/hello")
-#         self.assertEqual(response.status_code, 200)
+    # Vérifie que l'API est bien lancée
+    def test_api(self):
+        client = TestClient(app)
+        response = client.get("/")
+        self.assertEqual(response.status_code, 200)
 
-#     # Vérifie le endpoint predict
-#     def test_predict(self):
-#         client = TestClient(app)
-#         payload = {
-#             "PassengerId": 892,
-#             "Pclass": 3,
-#             "Sex": 1,
-#             "Age": 34.5,
-#             "SibSp": 0,
-#             "Parch": 0,
-#             "Fare": 7.8292,
-#             "Embarked": 1,
-#         }
-#         response = client.post("/predict", json=payload)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertEqual(response.json(), {"prediction": 0})
+    # Vérifie le endpoint predict
+    def test_predict(self):
+        client = TestClient(app)
+        payload = {
+            "PassengerId": 892,
+            "Pclass": 3,
+            "Sex": 1,
+            "Age": 34.5,
+            "SibSp": 0,
+            "Parch": 0,
+            "Fare": 7.8292,
+            "Embarked": 1,
+        }
+        response = client.post("/predict", json=payload)
+        self.assertEqual(response.status_code, 200)
+
+        response2 = client.post("/predict2", json=payload)
+        self.assertEqual(response2.status_code, 200)
 
 
 if __name__ == "__main__":

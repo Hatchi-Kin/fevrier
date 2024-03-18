@@ -5,9 +5,34 @@ import numpy as np
 from fastapi import FastAPI, File, UploadFile
 import uvicorn
 from pydantic import BaseModel, Field
+import boto3
+from dotenv import load_dotenv
 
-# import boto3
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+REGION_NAME = os.getenv("REGION_NAME")
 
+s3 = boto3.client(
+    "s3",
+    region_name=REGION_NAME,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+)
+
+bucket_name = 'mlflowmodels'
+GB = 'gradient_boosting.pkl'
+RF = 'random_forest.pkl'
+
+
+def get_model(bucket_name, model_name):
+    response = s3.get_object(Bucket=bucket_name, Key=model_name)
+    data = response['Body'].read()
+    model = pickle.loads(data)
+    return model
+
+response = s3.get_object(Bucket=bucket_name, Key=GB)
+data = response['Body'].read()
+model = pickle.loads(data)
 
 tags = [
     {"name": "help", "description": "Loupiotte Verte !"},
@@ -46,14 +71,13 @@ def get_help():
     return {"message": "Welcome to the API"}
 
 
-@app.post("/predict", tags=["Predict with RandomForest"])
+@app.post("/predict", tags=["RandomForest"])
 def predict(credit: QueryFormat):
     """
     Endpoint for making predictions with the first model.
     """
     try:
-        with open("random_forest.pkl", "rb") as file:
-            model = pickle.load(file)
+        model = get_model(bucket_name, RF)
     except FileNotFoundError:
         return {"error": "Model file not found"}
 
@@ -70,19 +94,18 @@ def predict(credit: QueryFormat):
         return {"error": str(e)}
 
 
-@app.post("/predict2", tags=["Predict with GradientBoosting"])
+@app.post("/predict2", tags=["GradientBoosting"])
 def predict_2(credit: QueryFormat):
     """
     Endpoint for making predictions with the second model.
     """
     try:
-        with open("gradient_boosting.pkl", "rb") as file:
-            model = pickle.load(file)
+        model = get_model(bucket_name, GB)
     except FileNotFoundError:
         return {"error": "Model file not found"}
 
     try:
-        data = pd.DataFrame([credit.dict()])
+        data = pd.DataFrame([credit.model_dump()])
         prediction = model.predict(data)
 
         if isinstance(prediction, np.ndarray):
@@ -94,4 +117,4 @@ def predict_2(credit: QueryFormat):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

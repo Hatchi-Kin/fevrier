@@ -7,3 +7,4 @@ pydantic
 mlflow
 boto3
 httpx
+python-dotenv
