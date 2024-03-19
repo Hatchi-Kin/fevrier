@@ -2,13 +2,13 @@ import os
 import pickle
 import pandas as pd
 import numpy as np
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI #, File, UploadFile
 import uvicorn
 from pydantic import BaseModel, Field
 import boto3
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv("./.env")
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -119,4 +119,4 @@ def predict_2(credit: QueryFormat):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=80)
