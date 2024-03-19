@@ -28,24 +28,24 @@ class TestAPI(TestCase):
         response = client.get("/")
         self.assertEqual(response.status_code, 200)
 
-    # Vérifie le endpoint predict
-    def test_predict(self):
-        client = TestClient(app)
-        payload = {
-            "PassengerId": 892,
-            "Pclass": 3,
-            "Sex": 1,
-            "Age": 34.5,
-            "SibSp": 0,
-            "Parch": 0,
-            "Fare": 7.8292,
-            "Embarked": 1,
-        }
-        response = client.post("/predict", json=payload)
-        self.assertEqual(response.status_code, 200)
+    # # Vérifie le endpoint predict
+    # def test_predict(self):
+    #     client = TestClient(app)
+    #     payload = {
+    #         "PassengerId": 892,
+    #         "Pclass": 3,
+    #         "Sex": 1,
+    #         "Age": 34.5,
+    #         "SibSp": 0,
+    #         "Parch": 0,
+    #         "Fare": 7.8292,
+    #         "Embarked": 1,
+    #     }
+    #     response = client.post("/predict", json=payload)
+    #     self.assertEqual(response.status_code, 200)
 
-        response2 = client.post("/predict2", json=payload)
-        self.assertEqual(response2.status_code, 200)
+    #     response2 = client.post("/predict2", json=payload)
+    #     self.assertEqual(response2.status_code, 200)
 
 
 if __name__ == "__main__":

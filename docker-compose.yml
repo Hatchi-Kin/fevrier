@@ -9,5 +9,7 @@ services:
     ports:
       - 80:80
     restart: always
-    env_file:
-      - .env
+    environment:  # Set environment variables here
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      REGION_NAME: ${REGION_NAME}
