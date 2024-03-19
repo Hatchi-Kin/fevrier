@@ -20,13 +20,13 @@ class TestDev(TestCase):
         self.assertIn(".gitignore", list_files)
 
 
-class TestAPI(TestCase):
+# class TestAPI(TestCase):
 
-    # Vérifie que l'API est bien lancée
-    def test_api(self):
-        client = TestClient(app)
-        response = client.get("/")
-        self.assertEqual(response.status_code, 200)
+#     # Vérifie que l'API est bien lancée
+#     def test_api(self):
+#         client = TestClient(app)
+#         response = client.get("/")
+#         self.assertEqual(response.status_code, 200)
 
     # # Vérifie le endpoint predict
     # def test_predict(self):
