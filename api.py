@@ -8,17 +8,13 @@ from pydantic import BaseModel, Field
 import boto3
 from dotenv import load_dotenv
 
-load_dotenv("./.env")
-
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-REGION_NAME = os.getenv("REGION_NAME")
+load_dotenv()
 
 s3 = boto3.client(
     "s3",
-    region_name=REGION_NAME,
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=os.getenv('REGION_NAME'),
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
 )
 
 bucket_name = 'mlflowmodels'
@@ -119,4 +115,4 @@ def predict_2(credit: QueryFormat):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
